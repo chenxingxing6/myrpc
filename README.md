@@ -8,7 +8,7 @@ RPC要解决的两个问题
 2.远程调用时，要能够像本地调用一样方便，让调用者感知不到远程调用的逻辑。
 
 完整RPC调用过程：   
-![desc]()
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/1.jpg)    
 
 > 以左边的Client端为例，Application就是rpc的调用方，Client Stub就是我们上面说到的代理对象，其实内部是通过rpc方
 式来进行远程调用的代理对象，至于Client Run-time Library，则是实现远程调用的工具包，比如jdk的Socket，最后通过底
