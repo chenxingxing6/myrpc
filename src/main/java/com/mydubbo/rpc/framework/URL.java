@@ -1,6 +1,7 @@
 package com.mydubbo.rpc.framework;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: lanxinghua
@@ -34,5 +35,27 @@ public class URL implements Serializable {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        URL url = (URL) o;
+        return Objects.equals(hostName, url.hostName) &&
+                Objects.equals(port, url.port);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hostName, port);
+    }
+
+    @Override
+    public String toString() {
+        return "URL{" +
+                "hostName='" + hostName + '\'' +
+                ", port=" + port +
+                '}';
     }
 }

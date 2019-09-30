@@ -2,6 +2,7 @@ package com.demo.provider;
 
 import com.demo.provider.api.IHelloService;
 import com.demo.provider.impl.HelloService;
+import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.registry.Register;
 import com.mydubbo.rpc.framework.URL;
 import com.mydubbo.rpc.protocol.http.HttpServer;
@@ -14,7 +15,7 @@ import com.mydubbo.rpc.protocol.http.HttpServer;
 public class ProviderStart {
     public static void main(String[] args) {
         // 服务注册
-        URL url = new URL("localhost", 8888);
+        URL url = new URL(ProtocolConfig.host, ProtocolConfig.port);
         Register.registServer(url, IHelloService.class.getName(), HelloService.class);
 
         // 启动服务

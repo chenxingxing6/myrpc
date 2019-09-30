@@ -1,5 +1,7 @@
 package com.mydubbo.rpc.protocol.http;
 
+import com.mydubbo.config.ProtocolConfig;
+import com.mydubbo.config.ProtocolEnum;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
 import org.apache.commons.io.IOUtils;
@@ -17,7 +19,7 @@ import java.net.HttpURLConnection;
 public class HttpClient {
     public String post(URL url, Invocation invocation){
         try {
-            java.net.URL u = new java.net.URL("http", url.getHostName(), url.getPort(), "/client/");
+            java.net.URL u = new java.net.URL(ProtocolEnum.HTTP.name().toLowerCase(), url.getHostName(), url.getPort(), "/client/");
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
@@ -31,7 +33,7 @@ public class HttpClient {
 
             // 输入流
             InputStream is = connection.getInputStream();
-            return IOUtils.toString(is, "UTF-8");
+            return IOUtils.toString(is, ProtocolConfig.charset);
         }catch (Exception e){
             e.printStackTrace();
         }

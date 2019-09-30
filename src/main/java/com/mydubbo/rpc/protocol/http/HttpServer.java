@@ -1,5 +1,6 @@
 package com.mydubbo.rpc.protocol.http;
 
+import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.rpc.framework.URL;
 import org.apache.catalina.*;
 import org.apache.catalina.connector.Connector;
@@ -14,6 +15,8 @@ import org.apache.catalina.startup.Tomcat;
  * Desc:
  */
 public class HttpServer {
+    private static final String TOMCAT = "Tomcat";
+
     public void start(URL url){
         // 实例一个Tomcat
         Tomcat tomcat = new Tomcat();
@@ -22,12 +25,12 @@ public class HttpServer {
         Server server = tomcat.getServer();
 
         // 获取Service
-        Service service = server.findService("Tomcat");
+        Service service = server.findService(TOMCAT);
 
         // 构建Connector
         Connector connector = new Connector();
         connector.setPort(url.getPort());
-        connector.setURIEncoding("UTF-8");
+        connector.setURIEncoding(ProtocolConfig.charset);
 
         // 构建引擎
         Engine engine = new StandardEngine();
@@ -47,17 +50,18 @@ public class HttpServer {
         host.addChild(context);
         engine.addChild(host);
         service.setContainer(engine);
-        server.addService(service);
+        service.addConnector(connector);
 
         // tomcat是一个servlet,设置路径与映射
-        tomcat.addServlet(contextPath, "dispatcher", new DispatcherServlet());
-        context.addServletMappingDecoded("/client/*", "dispatcher");
+        String servletName = "dispatcher";
+        tomcat.addServlet(contextPath, servletName, new DispatcherServlet());
+        context.addServletMappingDecoded("/client/*", servletName);
 
         // 启动服务，接受请求
         try {
+            System.out.println("Tomcat..服务启动成功.....");
             tomcat.start();
             tomcat.getServer().await();
-            System.out.println("服务启动成功.....");
         }catch (Exception e){
             e.printStackTrace();
         }

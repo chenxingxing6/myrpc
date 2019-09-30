@@ -1,5 +1,6 @@
 package com.mydubbo.rpc.protocol.http;
 
+import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.registry.Register;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
@@ -26,7 +27,7 @@ public class HttpServletHandler {
             Invocation invocation = (Invocation) ois.readObject();
 
             // 寻找实现类，通过反射执行
-            Class implClass = Register.findServer(new URL("localhost", 8888), invocation.getInterfaceName());
+            Class implClass = Register.findServer(new URL(ProtocolConfig.host, ProtocolConfig.port), invocation.getInterfaceName());
             Method method = implClass.getMethod(invocation.getMethodName(), invocation.getParamTypes());
 
             // 执行结果返回
@@ -34,6 +35,11 @@ public class HttpServletHandler {
             System.out.println("结果：" + result.toString());
             IOUtils.write(result.toString(), response.getOutputStream(), "UTF-8");
         }catch (Exception e){
+            try {
+                IOUtils.write(e.getMessage(), response.getOutputStream(), "UTF-8");
+            }catch (Exception e1){
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
     }

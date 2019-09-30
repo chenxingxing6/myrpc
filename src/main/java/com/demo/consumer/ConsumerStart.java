@@ -1,7 +1,6 @@
 package com.demo.consumer;
 
 import com.demo.provider.api.IHelloService;
-import com.demo.provider.impl.HelloService;
 import com.mydubbo.rpc.framework.ProxyFactory;
 
 /**
