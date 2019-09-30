@@ -1,7 +1,9 @@
 package com.mydubbo.rpc.protocol.http;
 
 import com.mydubbo.config.ProtocolConfig;
+import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
+import com.mydubbo.rpc.protocol.IProtocolService;
 import org.apache.catalina.*;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
@@ -14,10 +16,11 @@ import org.apache.catalina.startup.Tomcat;
  * Date: 2019/9/30 11:59
  * Desc:
  */
-public class HttpServer {
+public class HttpServer implements IProtocolService {
     private static final String TOMCAT = "Tomcat";
 
-    public void start(URL url){
+    @Override
+    public void start(URL url, String charset, IRegistryDiscovery registryDiscovery){
         // 实例一个Tomcat
         Tomcat tomcat = new Tomcat();
 
@@ -30,7 +33,7 @@ public class HttpServer {
         // 构建Connector
         Connector connector = new Connector();
         connector.setPort(url.getPort());
-        connector.setURIEncoding(ProtocolConfig.charset);
+        connector.setURIEncoding(charset);
 
         // 构建引擎
         Engine engine = new StandardEngine();
@@ -54,7 +57,7 @@ public class HttpServer {
 
         // tomcat是一个servlet,设置路径与映射
         String servletName = "dispatcher";
-        tomcat.addServlet(contextPath, servletName, new DispatcherServlet());
+        tomcat.addServlet(contextPath, servletName, new DispatcherServlet(url, registryDiscovery));
         context.addServletMappingDecoded("/client/*", servletName);
 
         // 启动服务，接受请求

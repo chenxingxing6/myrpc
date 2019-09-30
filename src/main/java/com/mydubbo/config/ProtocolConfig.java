@@ -17,4 +17,11 @@ public class ProtocolConfig {
 
     // 字符集
     public static String charset = "UTF-8";
+
+    public ProtocolConfig(String name, String host, Integer port, String charset) {
+        ProtocolConfig.name = name;
+        ProtocolConfig.host = host;
+        ProtocolConfig.port = port;
+        ProtocolConfig.charset = charset;
+    }
 }

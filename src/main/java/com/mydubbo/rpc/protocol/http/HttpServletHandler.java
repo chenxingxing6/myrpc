@@ -1,7 +1,7 @@
 package com.mydubbo.rpc.protocol.http;
 
 import com.mydubbo.config.ProtocolConfig;
-import com.mydubbo.registry.Register;
+import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
 import org.apache.commons.io.IOUtils;
@@ -19,6 +19,14 @@ import java.lang.reflect.Method;
  */
 @SuppressWarnings("unchecked")
 public class HttpServletHandler {
+    private URL url;
+    private IRegistryDiscovery registryDiscovery;
+
+    public HttpServletHandler(URL url, IRegistryDiscovery registryDiscovery) {
+        this.url = url;
+        this.registryDiscovery = registryDiscovery;
+    }
+
     public void handler(HttpServletRequest request, HttpServletResponse response){
         try {
             // http请求转为流对象
@@ -27,7 +35,7 @@ public class HttpServletHandler {
             Invocation invocation = (Invocation) ois.readObject();
 
             // 寻找实现类，通过反射执行
-            Class implClass = Register.findServer(new URL(ProtocolConfig.host, ProtocolConfig.port), invocation.getInterfaceName());
+            Class implClass = registryDiscovery.discovery(new URL(url.getHostName(), url.getPort()), invocation.getInterfaceName());
             Method method = implClass.getMethod(invocation.getMethodName(), invocation.getParamTypes());
 
             // 执行结果返回

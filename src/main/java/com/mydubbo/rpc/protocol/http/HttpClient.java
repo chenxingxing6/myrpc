@@ -1,9 +1,9 @@
 package com.mydubbo.rpc.protocol.http;
 
 import com.mydubbo.config.ProtocolConfig;
-import com.mydubbo.config.ProtocolEnum;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
+import com.mydubbo.rpc.protocol.IProtocolClient;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
@@ -16,10 +16,12 @@ import java.net.HttpURLConnection;
  * Date: 2019/9/30 11:39
  * Desc:
  */
-public class HttpClient {
-    public String post(URL url, Invocation invocation){
+public class HttpClient implements IProtocolClient {
+
+    @Override
+    public String send(URL url, Invocation invocation) {
         try {
-            java.net.URL u = new java.net.URL(ProtocolEnum.HTTP.name().toLowerCase(), url.getHostName(), url.getPort(), "/client/");
+            java.net.URL u = new java.net.URL("http", url.getHostName(), url.getPort(), "/client/");
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);

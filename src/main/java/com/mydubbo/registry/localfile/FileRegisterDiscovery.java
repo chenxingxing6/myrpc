@@ -1,61 +1,49 @@
-package com.mydubbo.registry;
+package com.mydubbo.registry.localfile;
 
+import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * User: lanxinghua
- * Date: 2019/9/30 11:19
- * Desc: 注册中心
+ * Date: 2019/9/30 16:13
+ * Desc: 本地文件存储
  */
-public class Register {
+public class FileRegisterDiscovery implements IRegistryDiscovery {
     private static Map<String/*接口名*/, Map<URL, Class>> REGISTER = new HashMap<String, Map<URL, Class>>();
-
-    /**
-     * 注册文件路径
-     */
+    // 注册文件路径
     private static final String registerFilePath = "file/localregister.txt";
 
-    /**
-     * 服务注册
-     * @param url
-     * @param interfaceName
-     * @param implClass
-     */
-    public static void registServer(URL url, String interfaceName, Class implClass){
+    @Override
+    public void register(URL url, String interfaceName, Class implClass) {
         Map<URL, Class> map = new HashMap<URL, Class>();
         map.put(url, implClass);
-        System.out.println("服务注册 " + String.format("%s  %s", interfaceName, url.toString()));
         REGISTER.put(interfaceName, map);
         saveFile();
     }
 
-    /**
-     * 发现服务
-     * @param url  需要重新equals & hashCode方法
-     * @param interfaceName
-     * @return
-     */
-    public static Class findServer(final URL url, String interfaceName){
+    @Override
+    public Class discovery(URL url, String interfaceName) {
         REGISTER = getFile();
         return Optional.ofNullable(REGISTER.get(interfaceName)).map(r -> r.get(url)).orElseThrow(() -> new RuntimeException("service not found!"));
     }
 
-    /**
-     * 随机获取服务，模拟负载均衡（后面有空实现）
-     * @param interfaceName
-     * @return
-     */
-    public static URL randomServer(String interfaceName){
+    @Override
+    public URL randomServer(String interfaceName){
         REGISTER = getFile();
-        Set<URL> urls = Optional.ofNullable(REGISTER.get(interfaceName)).map(r -> r.keySet()).orElse(null);
+        Set<URL> urls = Optional.ofNullable(REGISTER.get(interfaceName)).map(r -> r.keySet()).orElseThrow(() -> new RuntimeException("service not found!"));
         if (urls == null || urls.isEmpty()){
             throw new RuntimeException("service not found!");
         }
+        // 这里就返回第一个
         return urls.iterator().next();
     }
+
 
     /**
      * 注册信息保存到文件中
@@ -94,6 +82,4 @@ public class Register {
         }
         return null;
     }
-
-
 }
