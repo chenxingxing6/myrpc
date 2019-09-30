@@ -1,9 +1,8 @@
 package com.mydubbo.rpc.protocol.http;
 
-import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
-import com.mydubbo.rpc.protocol.IProtocolService;
+import com.mydubbo.rpc.protocol.IProtocolServer;
 import org.apache.catalina.*;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
@@ -16,7 +15,7 @@ import org.apache.catalina.startup.Tomcat;
  * Date: 2019/9/30 11:59
  * Desc:
  */
-public class HttpServer implements IProtocolService {
+public class HttpServer implements IProtocolServer {
     private static final String TOMCAT = "Tomcat";
 
     @Override

@@ -2,6 +2,8 @@ package com.mydubbo.config;
 
 import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.registry.localfile.FileRegisterDiscovery;
+import com.mydubbo.registry.redis.RedisRegistryDiscovery;
+import com.mydubbo.registry.zookeeper.ZkRegistryDiscovery;
 
 /**
  * User: lanxinghua
@@ -10,8 +12,8 @@ import com.mydubbo.registry.localfile.FileRegisterDiscovery;
  */
 public enum  RegistryEnum {
     LOCALFILE("localfile", new FileRegisterDiscovery()),
-    ZOOKEEPER("zookeeper", null),
-    REDIS("redis", null);
+    ZOOKEEPER("zookeeper", new ZkRegistryDiscovery()),
+    REDIS("redis", new RedisRegistryDiscovery());
 
     RegistryEnum(String key, IRegistryDiscovery registryDiscovery){
         this.key = key;

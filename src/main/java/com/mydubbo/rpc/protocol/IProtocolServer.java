@@ -8,7 +8,7 @@ import com.mydubbo.rpc.framework.URL;
  * Date: 2019/9/30 17:24
  * Desc:
  */
-public interface IProtocolService {
+public interface IProtocolServer {
     /**
      * 启动服务
      * @param url

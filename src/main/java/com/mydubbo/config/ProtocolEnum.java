@@ -1,11 +1,13 @@
 package com.mydubbo.config;
 
-import com.mydubbo.registry.IRegistryDiscovery;
-import com.mydubbo.registry.localfile.FileRegisterDiscovery;
 import com.mydubbo.rpc.protocol.IProtocolClient;
-import com.mydubbo.rpc.protocol.IProtocolService;
+import com.mydubbo.rpc.protocol.IProtocolServer;
+import com.mydubbo.rpc.protocol.dubbo.DubboClient;
+import com.mydubbo.rpc.protocol.dubbo.DubboServer;
 import com.mydubbo.rpc.protocol.http.HttpClient;
 import com.mydubbo.rpc.protocol.http.HttpServer;
+import com.mydubbo.rpc.protocol.socket.SocketClient;
+import com.mydubbo.rpc.protocol.socket.SocketServer;
 
 /**
  * User: lanxinghua
@@ -13,11 +15,11 @@ import com.mydubbo.rpc.protocol.http.HttpServer;
  * Desc: 服务调用协议
  */
 public enum ProtocolEnum {
-    SOCKET("socket", null, null),
+    SOCKET("socket", new SocketClient(), new SocketServer()),
     HTTP("http", new HttpClient(), new HttpServer()),
-    DUBBO("dubbo", null, null);
+    DUBBO("dubbo", new DubboClient(), new DubboServer());
 
-    ProtocolEnum( String key, IProtocolClient protocolClient, IProtocolService protocolService) {
+    ProtocolEnum( String key, IProtocolClient protocolClient, IProtocolServer protocolService) {
         this.protocolClient = protocolClient;
         this.protocolService = protocolService;
         this.key = key;
@@ -35,7 +37,7 @@ public enum ProtocolEnum {
     // 客户端
     private IProtocolClient protocolClient;
     // 服务端
-    private IProtocolService protocolService;
+    private IProtocolServer protocolService;
     private String key;
 
     public IProtocolClient getProtocolClient() {
@@ -46,11 +48,11 @@ public enum ProtocolEnum {
         this.protocolClient = protocolClient;
     }
 
-    public IProtocolService getProtocolService() {
+    public IProtocolServer getProtocolService() {
         return protocolService;
     }
 
-    public void setProtocolService(IProtocolService protocolService) {
+    public void setProtocolService(IProtocolServer protocolService) {
         this.protocolService = protocolService;
     }
 

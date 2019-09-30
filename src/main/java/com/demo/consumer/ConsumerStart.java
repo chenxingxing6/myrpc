@@ -16,10 +16,13 @@ public class ConsumerStart {
         RpcClient rpcClient = (RpcClient) context.getBean("rpcClient");
         IHelloService helloService = rpcClient.getProxy(IHelloService.class);
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1; i++) {
-            String result = helloService.sayHello("lanxinghua");
-            System.out.println("[" + i + "]" + result);
-        }
-        System.out.println((System.currentTimeMillis() - startTime)/1000);
+//        for (int i = 0; i < 1; i++) {
+//            String result = helloService.sayHello("lanxinghua");
+//            System.out.println("[" + i + "]" + result);
+//        }
+//        System.out.println((System.currentTimeMillis() - startTime)/1000);
+
+         String result = helloService.sayHello("lanxinghua");
+         System.out.println(result);
     }
 }

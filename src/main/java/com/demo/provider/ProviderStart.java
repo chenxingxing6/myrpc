@@ -19,6 +19,5 @@ public class ProviderStart {
         rpcServer.register(IHelloService.class.getName(), HelloService.class);
         // 启动服务
         rpcServer.start();
-        System.out.println(rpcServer);
     }
 }

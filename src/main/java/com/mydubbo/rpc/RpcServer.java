@@ -2,15 +2,10 @@ package com.mydubbo.rpc;
 
 import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.config.ProtocolEnum;
-import com.mydubbo.config.RegistryEnum;
 import com.mydubbo.registry.IRegistryDiscovery;
 import com.mydubbo.registry.RegistryDiscoveryFactory;
 import com.mydubbo.rpc.framework.URL;
-import com.mydubbo.rpc.protocol.IProtocolService;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import com.mydubbo.rpc.protocol.IProtocolServer;
 
 /**
  * User: lanxinghua
@@ -20,12 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class RpcServer {
     // 配置文件
     private ProtocolConfig config;
-
     // 服务注册发现
     private IRegistryDiscovery registryDiscovery;
-
-    // 线程池
-    private static ThreadPoolExecutor threadPoolExecutor;
 
 
     public RpcServer(ProtocolConfig config, RegistryDiscoveryFactory registryDiscoveryFactory) {
@@ -45,22 +36,8 @@ public class RpcServer {
         if (protocolEnum == null){
             throw new RuntimeException("传输协议配置有误");
         }
-        IProtocolService service = protocolEnum.getProtocolService();
+        IProtocolServer service = protocolEnum.getProtocolService();
         service.start(new URL(host, port), charset, registryDiscovery);
-    }
-
-    /**
-     * 执行任务
-     */
-    public void submit(Runnable task){
-        if (threadPoolExecutor == null){
-            synchronized (RpcServer.class){
-                if (threadPoolExecutor == null){
-                    threadPoolExecutor = new ThreadPoolExecutor(16, 16, 10L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1024));
-                }
-            }
-        }
-        threadPoolExecutor.submit(task);
     }
 
     /**

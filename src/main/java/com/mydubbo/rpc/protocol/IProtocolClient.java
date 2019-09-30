@@ -15,5 +15,5 @@ public interface IProtocolClient {
      * @param invocation
      * @return
      */
-    public String send(URL url, Invocation invocation);
+    public Object send(URL url, Invocation invocation);
 }
