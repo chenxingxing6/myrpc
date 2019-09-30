@@ -1,4 +1,4 @@
-package com.demo.server.entity;
+package com.demo.provider.entity;
 
 import java.io.Serializable;
 
@@ -29,5 +29,13 @@ public class User implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

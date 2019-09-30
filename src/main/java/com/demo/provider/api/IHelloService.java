@@ -1,6 +1,6 @@
-package com.demo.server.service;
+package com.demo.provider.api;
 
-import com.demo.server.entity.User;
+import com.demo.provider.entity.User;
 
 /**
  * User: lanxinghua
@@ -8,6 +8,7 @@ import com.demo.server.entity.User;
  * Desc:
  */
 public interface IHelloService {
+    
     public String sayHello(String msg);
 
     public String saveUser(User user);

@@ -1,7 +1,7 @@
-package com.demo.server.service.impl;
+package com.demo.provider.impl;
 
-import com.demo.server.entity.User;
-import com.demo.server.service.IHelloService;
+import com.demo.provider.entity.User;
+import com.demo.provider.api.IHelloService;
 
 /**
  * User: lanxinghua
@@ -9,11 +9,13 @@ import com.demo.server.service.IHelloService;
  * Desc:
  */
 public class HelloService implements IHelloService{
+
     public String sayHello(String msg) {
         return "hello msg：" + msg;
     }
 
     public String saveUser(User user) {
+        System.out.println(user.toString());
         return "保存成功";
     }
 }

@@ -16,3 +16,24 @@ RPC要解决的两个问题
 
 > 这个过程中最重要的就是序列化和反序列化了，因为数据传输的数据包必须是二进制的，你直接丢一个Java对象过去，人家可不
 认识，你必须把Java对象序列化为二进制格式，传给Server端，Server端接收到之后，再反序列化为Java对象。
+
+---
+###### tomcat结构 server.xml
+```xml
+<Server port="8005" shutdown="SHUTDOWN">
+	<Service name="Catalina">
+		<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" 
+	       URIEncoding="UTF-8"/>
+		<Engine name="Catalina" defaultHost="localhost">
+			<Host name="localhost"  appBase="webapps"
+            	unpackWARs="true" autoDeploy="true">
+    		 	<Context path="" doBase="WORKDIR" reloadable="true"/>
+     		</Host>
+     </Engine>
+  </Service>
+</Server>
+
+```
+https://github.com/ghostKang/dubbo-study/tree/master/src/main/java/protocol/http
