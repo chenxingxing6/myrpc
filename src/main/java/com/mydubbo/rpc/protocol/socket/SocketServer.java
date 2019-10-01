@@ -1,10 +1,9 @@
 package com.mydubbo.rpc.protocol.socket;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
 import com.mydubbo.rpc.protocol.IProtocolServer;
-import org.apache.commons.io.IOUtils;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,7 +19,7 @@ import java.net.Socket;
 public class SocketServer implements IProtocolServer {
     private Socket socket;
     @Override
-    public void start(URL url, String charset, IRegistryDiscovery registryDiscovery) {
+    public void start(URL url, String charset, AbstractRegistryDiscovery registryDiscovery) {
         System.out.println("Socket..服务启动成功.....");
         try {
             ServerSocket serverSocket = new ServerSocket(url.getPort());

@@ -15,7 +15,7 @@ public class RegistryDiscoveryFactory {
         this.registryType = registryType;
     }
 
-    public IRegistryDiscovery getRegistryDiscovery(){
+    public AbstractRegistryDiscovery getRegistryDiscovery(){
         RegistryEnum registryEnum = RegistryEnum.getInstance(registryType);
         if (registryEnum == null){
             throw new RuntimeException("服务注册方式不存在");

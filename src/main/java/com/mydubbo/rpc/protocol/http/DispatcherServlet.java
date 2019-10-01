@@ -1,6 +1,6 @@
 package com.mydubbo.rpc.protocol.http;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 
 import javax.servlet.ServletException;
@@ -16,9 +16,9 @@ import java.io.IOException;
  */
 public class DispatcherServlet extends HttpServlet {
     private URL url;
-    private IRegistryDiscovery registryDiscovery;
+    private AbstractRegistryDiscovery registryDiscovery;
 
-    public DispatcherServlet(URL url, IRegistryDiscovery registryDiscovery) {
+    public DispatcherServlet(URL url, AbstractRegistryDiscovery registryDiscovery) {
         this.url = url;
         this.registryDiscovery = registryDiscovery;
     }

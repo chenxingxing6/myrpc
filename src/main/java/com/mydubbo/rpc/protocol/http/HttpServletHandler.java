@@ -1,7 +1,6 @@
 package com.mydubbo.rpc.protocol.http;
 
-import com.mydubbo.config.ProtocolConfig;
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.Invocation;
 import com.mydubbo.rpc.framework.URL;
 import org.apache.commons.io.IOUtils;
@@ -20,9 +19,9 @@ import java.lang.reflect.Method;
 @SuppressWarnings("unchecked")
 public class HttpServletHandler {
     private URL url;
-    private IRegistryDiscovery registryDiscovery;
+    private AbstractRegistryDiscovery registryDiscovery;
 
-    public HttpServletHandler(URL url, IRegistryDiscovery registryDiscovery) {
+    public HttpServletHandler(URL url, AbstractRegistryDiscovery registryDiscovery) {
         this.url = url;
         this.registryDiscovery = registryDiscovery;
     }

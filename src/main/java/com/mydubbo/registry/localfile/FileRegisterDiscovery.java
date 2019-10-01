@@ -1,6 +1,6 @@
 package com.mydubbo.registry.localfile;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 
 import java.io.*;
@@ -12,43 +12,14 @@ import java.util.Set;
 /**
  * User: lanxinghua
  * Date: 2019/9/30 16:13
- * Desc: 本地文件存储
+ * Desc: 本地文件存储,只需要重写save和get方法
  */
-public class FileRegisterDiscovery implements IRegistryDiscovery {
-    private static Map<String/*接口名*/, Map<URL, Class>> REGISTER = new HashMap<String, Map<URL, Class>>();
+public class FileRegisterDiscovery extends AbstractRegistryDiscovery {
     // 注册文件路径
-    private static final String registerFilePath = "file/localregister.txt";
+    private static final String registerFilePath = "img/localregister.txt";
 
     @Override
-    public void register(URL url, String interfaceName, Class implClass) {
-        Map<URL, Class> map = new HashMap<URL, Class>();
-        map.put(url, implClass);
-        REGISTER.put(interfaceName, map);
-        saveFile();
-    }
-
-    @Override
-    public Class discovery(URL url, String interfaceName) {
-        REGISTER = getFile();
-        return Optional.ofNullable(REGISTER.get(interfaceName)).map(r -> r.get(url)).orElseThrow(() -> new RuntimeException("service not found!"));
-    }
-
-    @Override
-    public URL randomServer(String interfaceName){
-        REGISTER = getFile();
-        Set<URL> urls = Optional.ofNullable(REGISTER.get(interfaceName)).map(r -> r.keySet()).orElseThrow(() -> new RuntimeException("service not found!"));
-        if (urls == null || urls.isEmpty()){
-            throw new RuntimeException("service not found!");
-        }
-        // 这里就返回第一个
-        return urls.iterator().next();
-    }
-
-
-    /**
-     * 注册信息保存到文件中
-     */
-    private static void saveFile(){
+    public void save() {
         try {
             File file = new File(registerFilePath);
             if (!file.exists()){
@@ -64,11 +35,8 @@ public class FileRegisterDiscovery implements IRegistryDiscovery {
         }
     }
 
-    /**
-     * 获取文件中注册信息
-     * @return
-     */
-    private static Map<String, Map<URL, Class>> getFile(){
+    @Override
+    public Map<String, Map<URL, Class>> get() {
         try {
             File file = new File(registerFilePath);
             if (!file.exists()){

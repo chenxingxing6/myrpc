@@ -1,28 +1,24 @@
 package com.mydubbo.registry.zookeeper;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
+
+import java.util.Map;
 
 /**
  * User: lanxinghua
  * Date: 2019/9/30 18:20
  * Desc:
  */
-public class ZkRegistryDiscovery implements IRegistryDiscovery {
+public class ZkRegistryDiscovery extends AbstractRegistryDiscovery {
+
     @Override
-    public void register(URL url, String interfaceName, Class implClass) {
-        // TODO: 2019/9/30
+    public void save() {
+
     }
 
     @Override
-    public Class discovery(URL url, String interfaceName) {
-        // TODO: 2019/9/30
-        return null;
-    }
-
-    @Override
-    public URL randomServer(String interfaceName) {
-        // TODO: 2019/9/30
+    public Map<String, Map<URL, Class>> get() {
         return null;
     }
 }

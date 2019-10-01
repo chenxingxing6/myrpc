@@ -18,4 +18,14 @@ public class HelloService implements IHelloService{
         System.out.println(user.toString());
         return "保存成功";
     }
+
+    @Override
+    public User getUser() {
+        User user = new User();
+        user.setUserName("lanxinghua");
+        user.setAge(22);
+        return user;
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package com.mydubbo.rpc.protocol.http;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 import com.mydubbo.rpc.protocol.IProtocolServer;
 import org.apache.catalina.*;
@@ -19,7 +19,7 @@ public class HttpServer implements IProtocolServer {
     private static final String TOMCAT = "Tomcat";
 
     @Override
-    public void start(URL url, String charset, IRegistryDiscovery registryDiscovery){
+    public void start(URL url, String charset, AbstractRegistryDiscovery registryDiscovery){
         // 实例一个Tomcat
         Tomcat tomcat = new Tomcat();
 

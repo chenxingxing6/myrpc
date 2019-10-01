@@ -1,6 +1,6 @@
 package com.mydubbo.rpc.protocol.dubbo;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 import com.mydubbo.rpc.protocol.IProtocolServer;
 
@@ -11,7 +11,7 @@ import com.mydubbo.rpc.protocol.IProtocolServer;
  */
 public class DubboServer implements IProtocolServer {
     @Override
-    public void start(URL url, String charset, IRegistryDiscovery registryDiscovery) {
+    public void start(URL url, String charset, AbstractRegistryDiscovery registryDiscovery) {
 
     }
 }

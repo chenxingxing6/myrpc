@@ -22,7 +22,8 @@ public class ConsumerStart {
 //        }
 //        System.out.println((System.currentTimeMillis() - startTime)/1000);
 
-         String result = helloService.sayHello("lanxinghua");
-         System.out.println(result);
+        System.out.println(helloService.sayHello("lanxinghua"));
+        System.out.println(helloService.getUser());
+        System.out.println(helloService.saveUser(helloService.getUser()));
     }
 }

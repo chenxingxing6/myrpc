@@ -2,7 +2,7 @@ package com.mydubbo.rpc;
 
 import com.mydubbo.config.ProtocolConfig;
 import com.mydubbo.config.ProtocolEnum;
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.registry.RegistryDiscoveryFactory;
 import com.mydubbo.rpc.framework.URL;
 import com.mydubbo.rpc.protocol.IProtocolServer;
@@ -16,7 +16,7 @@ public class RpcServer {
     // 配置文件
     private ProtocolConfig config;
     // 服务注册发现
-    private IRegistryDiscovery registryDiscovery;
+    private AbstractRegistryDiscovery registryDiscovery;
 
 
     public RpcServer(ProtocolConfig config, RegistryDiscoveryFactory registryDiscoveryFactory) {

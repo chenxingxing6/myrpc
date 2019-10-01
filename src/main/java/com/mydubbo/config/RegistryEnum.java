@@ -1,6 +1,6 @@
 package com.mydubbo.config;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.registry.localfile.FileRegisterDiscovery;
 import com.mydubbo.registry.redis.RedisRegistryDiscovery;
 import com.mydubbo.registry.zookeeper.ZkRegistryDiscovery;
@@ -15,7 +15,7 @@ public enum  RegistryEnum {
     ZOOKEEPER("zookeeper", new ZkRegistryDiscovery()),
     REDIS("redis", new RedisRegistryDiscovery());
 
-    RegistryEnum(String key, IRegistryDiscovery registryDiscovery){
+    RegistryEnum(String key, AbstractRegistryDiscovery registryDiscovery){
         this.key = key;
         this.registryDiscovery = registryDiscovery;
     }
@@ -29,14 +29,14 @@ public enum  RegistryEnum {
         return null;
     }
 
-    private IRegistryDiscovery registryDiscovery;
+    private AbstractRegistryDiscovery registryDiscovery;
     private String key;
 
-    public IRegistryDiscovery getRegistryDiscovery() {
+    public AbstractRegistryDiscovery getRegistryDiscovery() {
         return registryDiscovery;
     }
 
-    public void setRegistryDiscovery(IRegistryDiscovery registryDiscovery) {
+    public void setRegistryDiscovery(AbstractRegistryDiscovery registryDiscovery) {
         this.registryDiscovery = registryDiscovery;
     }
 

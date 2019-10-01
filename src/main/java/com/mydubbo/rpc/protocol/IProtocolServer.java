@@ -1,6 +1,6 @@
 package com.mydubbo.rpc.protocol;
 
-import com.mydubbo.registry.IRegistryDiscovery;
+import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
 
 /**
@@ -15,5 +15,5 @@ public interface IProtocolServer {
      * @param charset
      * @param registryDiscovery
      */
-    public void start(URL url, String charset, IRegistryDiscovery registryDiscovery);
+    public void start(URL url, String charset, AbstractRegistryDiscovery registryDiscovery);
 }
