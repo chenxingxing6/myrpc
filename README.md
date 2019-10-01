@@ -2,7 +2,7 @@
 要实现一个RPC不算难，难的是实现一个高性能高可靠的RPC框架。  
 ##### 实现功能
 > 1.支持多种协议传输socket,http,dubbo   
-> 2.支持多种注册方式file,redis,zookeepre
+> 2.支持多种注册方式file,redis,zookeepre   
 > 3.可以动态切换协议和注册方式，只需要更改配置文件
 
 ---
@@ -232,6 +232,76 @@ public class HttpServer implements IProtocolServer {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+}
+```
+---
+
+### 四、注册中心
+> 1.本地文件  
+2.zk  
+3.redis  
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/5.png)    
+
+---
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/4.png)    
+
+---
+### 五、测试
+
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/6.png)    
+
+
+```java
+package com.demo.consumer;
+
+import com.demo.provider.api.IHelloService;
+import com.mydubbo.rpc.RpcClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * User: lanxinghua
+ * Date: 2019/9/30 11:56
+ * Desc: 服务启动
+ */
+public class ConsumerStart {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        RpcClient rpcClient = (RpcClient) context.getBean("rpcClient");
+        IHelloService helloService = rpcClient.getProxy(IHelloService.class);
+        System.out.println(helloService.sayHello("lanxinghua"));
+        System.out.println(helloService.getUser());
+        System.out.println(helloService.saveUser(helloService.getUser()));
+    }
+}
+
+```
+
+---
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/7.png)    
+```java
+package com.demo.provider;
+
+import com.demo.provider.api.IHelloService;
+import com.demo.provider.impl.HelloService;
+import com.mydubbo.rpc.RpcServer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * User: lanxinghua
+ * Date: 2019/9/30 11:55
+ * Desc: 服务提供
+ */
+public class ProviderStart {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        RpcServer rpcServer = (RpcServer) context.getBean("rpcServer");
+        // 服务注册
+        rpcServer.register(IHelloService.class.getName(), HelloService.class);
+        // 启动服务
+        rpcServer.start();
     }
 }
 ```
