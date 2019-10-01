@@ -12,6 +12,6 @@ import com.mydubbo.rpc.protocol.IProtocolServer;
 public class DubboServer implements IProtocolServer {
     @Override
     public void start(URL url, String charset, AbstractRegistryDiscovery registryDiscovery) {
-
+        System.out.println("dubbo..服务启动成功.....");
     }
 }

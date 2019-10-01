@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Method;
 
 /**
@@ -40,10 +41,14 @@ public class HttpServletHandler {
             // 执行结果返回
             Object result = method.invoke(implClass.newInstance(), invocation.getParams());
             System.out.println("结果：" + result.toString());
-            IOUtils.write(result.toString(), response.getOutputStream(), "UTF-8");
+            ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
+            oos.writeObject(result);
+            oos.flush();
+            oos.close();
+            ois.close();
         }catch (Exception e){
             try {
-                IOUtils.write(e.getMessage(), response.getOutputStream(), "UTF-8");
+                System.out.println(e.getMessage());
             }catch (Exception e1){
                 e1.printStackTrace();
             }

@@ -7,6 +7,7 @@ import com.mydubbo.rpc.protocol.IProtocolClient;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -19,7 +20,7 @@ import java.net.HttpURLConnection;
 public class HttpClient implements IProtocolClient {
 
     @Override
-    public String send(URL url, Invocation invocation) {
+    public Object send(URL url, Invocation invocation) {
         try {
             java.net.URL u = new java.net.URL("http", url.getHostName(), url.getPort(), "/client/");
             HttpURLConnection connection = (HttpURLConnection) u.openConnection();
@@ -28,14 +29,17 @@ public class HttpClient implements IProtocolClient {
 
             // 输出流
             OutputStream out = connection.getOutputStream();
-            ObjectOutputStream outputStream = new ObjectOutputStream(out);
-            outputStream.writeObject(invocation);
-            outputStream.flush();
-            outputStream.close();
+            ObjectOutputStream oos = new ObjectOutputStream(out);
+            oos.writeObject(invocation);
+            oos.flush();
+            oos.close();
 
             // 输入流
             InputStream is = connection.getInputStream();
-            return IOUtils.toString(is, ProtocolConfig.charset);
+            ObjectInputStream ois = new ObjectInputStream(is);
+            Object result = ois.readObject();
+            ois.close();
+            return result;
         }catch (Exception e){
             e.printStackTrace();
         }
