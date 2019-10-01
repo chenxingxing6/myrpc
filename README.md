@@ -3,7 +3,8 @@
 ##### 实现功能
 > 1.支持多种协议传输socket,http,dubbo   
 > 2.支持多种注册方式file,redis,zookeepre   
-> 3.可以动态切换协议和注册方式，只需要更改配置文件
+> 3.可以动态切换协议和注册方式，只需要更改配置文件  
+> 4.Netty实现（更新2019.10.1）
 
 ---
 ### 一、前言
@@ -25,6 +26,10 @@ RPC要解决的两个问题
 ### 二、项目结构
 ![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/3.png)    
 
+---
+![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/8.png)    
+
+---
 如果要补充协议，只需要实现IProtocolClient,IProtocolService接口
 ```java
 package com.mydubbo.rpc.protocol;

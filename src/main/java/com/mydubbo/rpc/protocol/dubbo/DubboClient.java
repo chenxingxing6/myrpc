@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 public class DubboClient implements IProtocolClient {
     @Override
     public Object send(URL url, Invocation invocation) {
-        Object result = null;
         NettyClientHandler handler = new NettyClientHandler(invocation);
         //接受服务端的数据处理类
         try {
@@ -39,7 +38,6 @@ public class DubboClient implements IProtocolClient {
                         }
                     });
             ChannelFuture future = b.connect(url.getHostName(), url.getPort()).sync();
-            result = future.get(5, TimeUnit.SECONDS);
             future.channel().closeFuture().sync();
         }catch (Exception e){
             e.printStackTrace();
