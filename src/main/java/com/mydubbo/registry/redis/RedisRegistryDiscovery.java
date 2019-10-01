@@ -1,7 +1,10 @@
 package com.mydubbo.registry.redis;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mydubbo.registry.AbstractRegistryDiscovery;
 import com.mydubbo.rpc.framework.URL;
+import com.mydubbo.util.RedisUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +15,17 @@ import java.util.Map;
  * Desc:
  */
 public class RedisRegistryDiscovery extends AbstractRegistryDiscovery {
+    private static final String key = "redis:registry:server";
 
     @Override
     public void save() {
+        RedisUtil.setObject(key, REGISTER);
 
     }
 
     @Override
     public Map<String, Map<URL, Class>> get() {
-        return null;
+        Map<String, Map<URL, Class>> result = (Map)RedisUtil.getObject(key);
+        return result;
     }
 }
