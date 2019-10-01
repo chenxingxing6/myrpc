@@ -15,9 +15,9 @@ public class ProviderStart {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
         RpcServer rpcServer = (RpcServer) context.getBean("rpcServer");
-        // 服务注册
+        // 服务注册，如果不手注册服务，会自动通过注解方式进行服务注册@Rpc
         rpcServer.register(IHelloService.class.getName(), HelloService.class);
-        // 启动服务
+        // 启动服务)
         rpcServer.start();
     }
 }

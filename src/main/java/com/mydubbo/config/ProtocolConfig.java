@@ -18,10 +18,14 @@ public class ProtocolConfig {
     // 字符集
     public static String charset = "UTF-8";
 
-    public ProtocolConfig(String name, String host, Integer port, String charset) {
+    // 扫描包路径
+    public static String scanPackage = "com.demo";
+
+    public ProtocolConfig(String name, String host, Integer port, String charset, String scanPackage) {
         ProtocolConfig.name = name;
         ProtocolConfig.host = host;
         ProtocolConfig.port = port;
         ProtocolConfig.charset = charset;
+        ProtocolConfig.scanPackage = scanPackage;
     }
 }

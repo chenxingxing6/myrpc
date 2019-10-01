@@ -15,6 +15,7 @@
         <constructor-arg name="host" value="${config.protocol.host}"/>
         <constructor-arg name="port" value="${config.protocol.port}"/>
         <constructor-arg name="charset" value="${config.protocol.charset}"/>
+        <constructor-arg name="scanPackage" value="${congig.protocol.scan.package}"/>
     </bean>
 
     <!-- 服务注册方式 -->

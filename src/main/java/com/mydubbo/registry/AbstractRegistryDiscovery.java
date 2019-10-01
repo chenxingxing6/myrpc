@@ -55,6 +55,22 @@ public abstract class AbstractRegistryDiscovery {
     }
 
     /**
+     * 注册服务个数
+     * @return
+     */
+    public int countServer(){
+        return REGISTER.size();
+    }
+
+    /**
+     * 获取所有服务
+     * @return
+     */
+    public Map<String, Map<URL, Class>> listServer(){
+        return REGISTER;
+    }
+
+    /**
      * 保存到注册中心
      */
     public abstract void save();
