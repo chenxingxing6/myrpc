@@ -248,6 +248,58 @@ public class HttpServer implements IProtocolServer {
 
 ---
 ### 五、测试
+```html
+## 协议配置信息
+## 支持socket,http,dubbo
+config.protocol.name=socket
+config.protocol.host=localhost
+config.protocol.port=8080
+config.protocol.charset=UTF-8
+
+## 服务注册 支持localfile,redis,zookeeper
+service.registry.type=redis
+#service.registry.type=localfile
+#service.registry.type=zookeeper
+```
+
+---
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:spring.properties"/>
+
+    <!-- 协议配置信息 -->
+    <bean id="protocolConfig" class="com.mydubbo.config.ProtocolConfig">
+        <constructor-arg name="name" value="${config.protocol.name}"/>
+        <constructor-arg name="host" value="${config.protocol.host}"/>
+        <constructor-arg name="port" value="${config.protocol.port}"/>
+        <constructor-arg name="charset" value="${config.protocol.charset}"/>
+    </bean>
+
+    <!-- 服务注册方式 -->
+    <bean id="registryDiscoveryFactory" class="com.mydubbo.registry.RegistryDiscoveryFactory">
+        <constructor-arg name="registryType" value="${service.registry.type}"/>
+    </bean>
+
+    <bean id="rpcClient" class="com.mydubbo.rpc.RpcClient">
+        <constructor-arg name="config" ref="protocolConfig"/>
+        <constructor-arg name="registryDiscoveryFactory" ref="registryDiscoveryFactory"/>
+    </bean>
+
+    <bean id="rpcServer" class="com.mydubbo.rpc.RpcServer">
+        <constructor-arg name="config" ref="protocolConfig"/>
+        <constructor-arg name="registryDiscoveryFactory" ref="registryDiscoveryFactory"/>
+    </bean>
+</beans>
+```
+---
 
 ![desc](https://raw.githubusercontent.com/chenxingxing6/myrpc/master/img/6.png)    
 
