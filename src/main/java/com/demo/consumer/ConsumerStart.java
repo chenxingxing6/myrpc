@@ -1,6 +1,7 @@
 package com.demo.consumer;
 
 import com.demo.provider.api.IHelloService;
+import com.demo.provider.entity.User;
 import com.mydubbo.rpc.RpcClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +24,7 @@ public class ConsumerStart {
 //        System.out.println((System.currentTimeMillis() - startTime)/1000);
 
         System.out.println(helloService.sayHello("lanxinghua"));
-        System.out.println(helloService.getUser());
-        System.out.println(helloService.saveUser(helloService.getUser()));
+        //System.out.println(helloService.getUser());
+        System.out.println(helloService.saveUser(new User()));
     }
 }

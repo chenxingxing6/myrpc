@@ -143,21 +143,21 @@ public abstract class AbstractRegistryDiscovery {
 ```
 ---
 
-###三、内置tomca
+### 三、内置tomca
 
 ```xml
 <Server port="8005" shutdown="SHUTDOWN">
-	<Service name="Catalina">
-		<Connector port="8080" protocol="HTTP/1.1"
-               connectionTimeout="20000"
-               redirectPort="8443" 
-	       URIEncoding="UTF-8"/>
-		<Engine name="Catalina" defaultHost="localhost">
-			<Host name="localhost"  appBase="webapps"
-            	unpackWARs="true" autoDeploy="true">
-    		 	<Context path="" doBase="WORKDIR" reloadable="true"/>
-     		</Host>
-     </Engine>
+  <Service name="Catalina">
+    <Connector port="8080" protocol="HTTP/1.1"
+       connectionTimeout="20000"
+       redirectPort="8443" 
+       URIEncoding="UTF-8"/>
+    <Engine name="Catalina" defaultHost="localhost">
+       <Host name="localhost"  appBase="webapps"
+         unpackWARs="true" autoDeploy="true">
+         <Context path="" doBase="WORKDIR" reloadable="true"/>
+       </Host>
+    </Engine>
   </Service>
 </Server>
 ```

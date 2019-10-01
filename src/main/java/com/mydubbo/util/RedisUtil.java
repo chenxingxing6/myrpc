@@ -20,7 +20,7 @@ public class RedisUtil {
     }
 
     public static String setObject(String key, Object value){
-        return jedis.set(key.getBytes(), toByteArray(value));
+        return jedis.set(key.getBytes(), IoUtil.toByteArray(value));
     }
 
     public static String setString(String key, String value){
@@ -32,7 +32,7 @@ public class RedisUtil {
     }
 
     public static Object getObject(String key){
-        return toObject(jedis.get(key.getBytes()));
+        return IoUtil.toObject(jedis.get(key.getBytes()));
     }
 
     private static String set(String key, String value){
@@ -43,48 +43,6 @@ public class RedisUtil {
         // NX XX
         // EX PX
        return jedis.set(key, value, "NX", "EX", second);
-    }
-
-    /**
-     * 对象转数组
-     * @param obj
-     * @return
-     */
-    public static byte[] toByteArray (Object obj) {
-        byte[] bytes = null;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(obj);
-            oos.flush();
-            bytes = bos.toByteArray ();
-            oos.close();
-            bos.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return bytes;
-    }
-
-    /**
-     * 数组转对象
-     * @param bytes
-     * @return
-     */
-    public static Object toObject (byte[] bytes) {
-        Object obj = null;
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream (bytes);
-            ObjectInputStream ois = new ObjectInputStream (bis);
-            obj = ois.readObject();
-            ois.close();
-            bis.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return obj;
     }
 
     public static void main(String[] args) {
